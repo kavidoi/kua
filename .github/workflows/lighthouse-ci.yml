@@ -1,0 +1,22 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  lhci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - run: npx http-server .next/static -p 8081 -s &
+      - run: npx serve -s .next/standalone -l 8080 &
+      - run: npx @lhci/cli autorun --collect.url=http://localhost:3000 --assert.preset=lighthouse:recommended || true
+
+

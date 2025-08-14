@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #0B0B12;
+  }
+  html, body { height: 100%; }
+}
+
+/* Accesibilidad: foco visible */
+*:focus-visible {
+  outline: 2px solid theme('colors.lime');
+  outline-offset: 2px;
+}
+
+.glow-hover:hover, .glow-focus:focus-visible {
+  box-shadow: theme('boxShadow.glow');
+}
+
+/* Dotted grid background helper */
+.bg-grid {
+  background-image: theme('backgroundImage.grid');
+  background-size: theme('backgroundSize.grid');
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe\:pulse-slow { animation: none !important; }
+}
+
+@keyframes drift {
+  0% { transform: translateY(0px); opacity: 0.9; }
+  50% { transform: translateY(-6px); opacity: 1; }
+  100% { transform: translateY(0px); opacity: 0.9; }
+}
+
+.drift {
+  animation: drift 6s ease-in-out infinite;
+}
+
+
